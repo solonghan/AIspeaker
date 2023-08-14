@@ -1,0 +1,42 @@
+ALTER TABLE `news` ADD `lang` ENUM('tc','en') NOT NULL AFTER `content`;
+ALTER TABLE `faq_topic` ADD `lang` ENUM('tc','en') NOT NULL AFTER `title`;
+ALTER TABLE `faq_content` ADD `lang` ENUM('tc','en') NOT NULL AFTER `answer`;
+
+INSERT INTO `route_table` (`id`, `parent_id`, `sequence`, `path`, `name`, `component`, `hidden`, `alwaysShow`, `redirect`, `title`, `icon`, `roles`) VALUES ('19', '16', '0', 'class-en', 'faq-class-edit-en', 'faq/class-en', 'false', '', '', '問題類別編輯-en', '', '12,'), ('20', '16', '0', 'classlist-en', 'faq-class-list-en', 'faq/list-en', 'false', '', '', '問題主題列表-en', '', '12,');
+
+create table vad_template (
+    id int AUTO_INCREMENT PRIMARY KEY,
+    title varchar(100) not null DEFAULT '' COMMENT '標題',
+    description varchar(100) not null DEFAULT '' COMMENT '描述',
+    andriod_thresholds varchar(100) not null DEFAULT '' COMMENT '' ,
+    andriod_vadStartBeforeBytesMax varchar(100) not null DEFAULT '' COMMENT '' ,
+    andriod_vadStartDelayBytesMax varchar(100) not null DEFAULT '' COMMENT '' ,
+    andriod_vadEndDelayBytesMin varchar(100) not null DEFAULT '' COMMENT '' ,
+    andriod_vadEndDelayBytesMax varchar(100) not null DEFAULT '' COMMENT '' ,
+    ios_thresholds varchar(100) not null DEFAULT '' COMMENT '' ,
+    ios_vadStartBeforeBytesMax varchar(100) not null DEFAULT '' COMMENT '' ,
+    ios_vadStartDelayBytesMax varchar(100) not null DEFAULT '' COMMENT '' ,
+    ios_vadEndDelayBytesMin varchar(100) not null DEFAULT '' COMMENT '' ,
+    ios_vadEndDelayBytesMax varchar(100) not null DEFAULT '' COMMENT '' ,
+    `status` enum('enable','disable') not null DEFAULT 'enable' COMMENT ''
+);
+ALTER TABLE `vad_template` ADD `create_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `status`;
+
+INSERT INTO `route_table` (`id`, `parent_id`, `sequence`, `path`, `name`, `component`, `hidden`, `alwaysShow`, `redirect`, `title`, `icon`, `roles`) VALUES ('70', '0', '6', '/vad', 'vad', 'Layout', 'false', 'false', '', 'VAD設定', '', '12');
+INSERT INTO `route_table` (`id`, `parent_id`, `sequence`, `path`, `name`, `component`, `hidden`, `alwaysShow`, `redirect`, `title`, `icon`, `roles`) VALUES ('71', '70', '0', 'list', 'list', 'vad/list', 'false', '', '', 'VAD模式設定', '', '12')
+
+CREATE TABLE track_event (
+    id bigint AUTO_INCREMENT PRIMARY KEY,
+    user varchar(100) DEFAULT '' not null COMMENT 'org_user_main.USER',
+    `event` varchar(100) DEFAULT '' not null COMMENT '事件',
+    app_version varchar(100) DEFAULT null COMMENT 'app版本',
+    app_lang varchar(100) DEFAULT null COMMENT 'app語系',
+    device_info varchar(100) DEFAULT null COMMENT '手機品牌和型號',
+    device_firmware varchar(255) DEFAULT null COMMENT '手機韌體版本',
+    app_page_name varchar(255) DEFAULT null COMMENT '頁面名稱',
+    app_page_stay_time int DEFAULT null COMMENT '頁面停留時間'
+);
+
+UPDATE `route_table` SET `component` = 'member/memberTraceList' WHERE `route_table`.`id` = 49
+
+INSERT INTO `route_table` (`id`, `parent_id`, `sequence`, `path`, `name`, `component`, `hidden`, `alwaysShow`, `redirect`, `title`, `icon`, `roles`) VALUES (NULL, '46', '0', 'memberTraceDetail/:id', 'member-trace-detail', 'member/memberTraceDetail', 'true', '', '', '進程追蹤', '', '40,12,')
